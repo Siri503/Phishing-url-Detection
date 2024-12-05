@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>Evil Chatbot Detection</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{% static 'evils.css' %}" />
+<script language="javascript">
+	function validate(formObj)
+	{
+	if(formObj.t1.value.length==0)
+	{
+	alert("Please Enter URL");
+	formObj.t1.focus();
+	return false;
+	}
+	
+	return true;
+	}
+	</script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<div id="logo">
+			<center><font size="3" color="yellow">Safeguarding Against Evil Chatbots: Design, Development, and 
+				Integration Strategies for Chatbot Security in Phishing Attacks </font></center>
+		</div>
+		<div id="slogan">
+			
+		</div>
+	</div>
+	<div id="menu">
+		<ul><center>
+			<li class="first current_page_item"><a href="{% url 'RunRandom' %}"><font size="" color="yellow">Run Random Forest </font></a></li>
+			<li class="first current_page_item"><a href="{% url 'RunDT' %}"><font size="" color="yellow">Run Decision Tree</font></a></li>
+				<li class="first current_page_item"><a href="{% url 'RunSVM' %}"><font size="" color="yellow">Run SVM</font></a></li>
+		
+		<li class="first current_page_item"><a href="{% url 'Predict' %}"><font size="" color="yellow">Test Your URL</font></a></li>
+		
+		<li class="first current_page_item"><a href="{% url 'index' %}"><font size="" color="yellow">Logout</font></a></li>
+		</center></ul>	<br class="clearfix" />
+				</div>
+			
+	<div id="splash">
+		<img class="pic" src="{% static 'images/shutterstock_1901618698-100936241-orig-2.webp' %}" width="870" height="230" alt="" />
+	</div>	
+			<center>
+<form name="f1" method="post" action={% url 'PredictAction' %} onsubmit="return validate(this);">
+<br/>{% csrf_token %}<br/>
+   <h5><b>Phishing URL Detection Screen</b></h5>
+   
+   <font size="" color="yellow"><center>{{ data|safe }}</center></font>
+
+				
+						<table align="center" width="40" >
+			 <tr><td><font size="" color="yellow">Enter&nbsp;URL</b></td><td><input type="text" name="t1" style="font-family: Comic Sans MS" size="50"/></td></tr>
+         
+		            
+			<tr><td></td><td><input type="submit" value="Submit">
+
+			</td>
+			</tr>
+			</table>
+				</div>	
+					
+				</div>
+				<br/><br/>
+	</body>
+</html>

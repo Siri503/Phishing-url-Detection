@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>Evil Chatbot Detection</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{% static 'evils.css' %}"/>
+<script>
+function displayFullName() {
+    var request = new XMLHttpRequest();
+	var input = document.getElementById("t2").value;
+	var data = ""
+	data = data + document.getElementById("t1").value+"\n"
+	data = data + "You: "+input+"\n"
+	request.open("GET", "http://127.0.0.1:8000/ChatData?mytext="+input);
+	request.onreadystatechange = function() {
+    if(this.readyState === 4 && this.status === 200) {
+	    var output = this.responseText
+		const arr = output.split("#");
+		data = data + arr[0]+"\n"
+		document.getElementById("t1").innerHTML = data;
+		document.getElementById("t2").value = "";
+		a = document.createElement('a');
+        a.href =  arr[1]; // Insted of calling setAttribute 
+		a.target = "'_blank'";
+        a.innerHTML = "The given link "+arr[1]+" is a"+arr[2];
+		document.getElementById("offers").innerHTML = "";
+		document.getElementById("offers").appendChild(a); // Append the link to the div
+        }
+    };
+	request.send();
+}
+</script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<div id="logo">
+			<center><font size="3" color="yellow">Safeguarding Against Evil Chatbots: Design, Development, and 
+				Integration Strategies for Chatbot Security in Phishing Attacks </font></center>
+		</div>
+		<div id="slogan">
+			
+		</div>
+	</div>
+	<div id="menu">
+
+	<ul><center>
+			<li class="first current_page_item"><a href="{% url 'RunRandom' %}"><font size="" color="yellow">Run Random Forest </font></a></li>
+			<li class="first current_page_item"><a href="{% url 'RunDT' %}"><font size="" color="yellow">Run Decision Tree</font></a></li>
+				<li class="first current_page_item"><a href="{% url 'RunSVM' %}"><font size="" color="yellow">Run SVM</font></a></li>
+		
+		<li class="first current_page_item"><a href="{% url 'Chatbot' %}"><font size="" color="yellow">Chatbot</font></a></li>
+		
+		<li class="first current_page_item"><a href="{% url 'index' %}"><font size="" color="yellow">Logout</font></a></li>
+		</center></ul>
+		<br class="clearfix" />
+	</div>
+	<div id="splash">
+		<img class="pic" src="{% static 'images/shutterstock_1901618698-100936241-orig-2.webp' %}" width="870" height="230" alt="" />
+	</div>
+	<br/>
+	 <font size="" color="white"><center>{{ data|safe }}</center></font>
+
+	  
+	<center><font size="" color="#1B1B1B">Chat with ChatBot</center></font></p>
+	<div id="offers">
+	
+    </div>
+<br/>
+<center>
+          <div id="result">
+			
+        <textarea name="t1" id="t1" rows="20" cols="80"></textarea>
+		<input type="text" name="t2" id="t2" size="60"/>
+    </div>
+	
+    <button type="button" onclick="displayFullName()">Check</button>
+</center>
+
+	<br/><br/><br/><br/><br/>
+</body>
+</html>
